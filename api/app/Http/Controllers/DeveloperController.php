@@ -38,5 +38,8 @@ class DeveloperController extends Controller
 
     public function destroy(Developer $developer)
     {
+        $developer->delete();
+
+        return response()->noContent(204);
     }
 }
