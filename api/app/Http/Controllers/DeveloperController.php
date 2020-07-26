@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Developer;
 use App\Http\Requests\DeveloperStoreRequest;
+use App\Http\Requests\DeveloperUpdateRequest;
 use Illuminate\Http\Request;
 
 class DeveloperController extends Controller
@@ -27,8 +28,11 @@ class DeveloperController extends Controller
     {
     }
 
-    public function update(Request $request, Developer $developer)
+    public function update(DeveloperUpdateRequest $request, Developer $developer)
     {
+        $developer->fill($request->all())->save();
+
+        return $developer;
     }
 
     public function destroy(Developer $developer)
