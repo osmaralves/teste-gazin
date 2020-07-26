@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Developer;
+use App\Http\Requests\DeveloperStoreRequest;
 use Illuminate\Http\Request;
 
 class DeveloperController extends Controller
@@ -15,8 +16,11 @@ class DeveloperController extends Controller
             ->paginate(min([100, $request->query('perPage', 10)]));
     }
 
-    public function store(Request $request)
+    public function store(DeveloperStoreRequest $request)
     {
+        Developer::create($request->all());
+
+        return response()->noContent(201);
     }
 
     public function show(Developer $developer)
