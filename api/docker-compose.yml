@@ -1,0 +1,39 @@
+version: "3.7"
+
+services:
+  api:
+    container_name: gazin-teste-api
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      args:
+        user: laravel
+        uid: 1000
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+
+  db:
+    container_name: gazin-teste-db
+    image: mysql:5.7
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./.docker/mysql:/var/lib/mysql
+
+  nginx:
+    container_name: gazin-teste-nginx
+    image: nginx:1.17-alpine
+    restart: unless-stopped
+    ports:
+      - 8000:80
+    volumes:
+      - ./:/var/www
+      - ./.docker/nginx:/etc/nginx/conf.d
