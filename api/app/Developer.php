@@ -19,6 +19,15 @@ class Developer extends Model
         'birth_date' => 'date:Y-m-d',
     ];
 
+    protected $appends = [
+        'age',
+    ];
+
+    public function getAgeAttribute()
+    {
+        return $this->birth_date->age;
+    }
+
     public function scopeByName(Builder $query): Builder
     {
         return $query->orderBy('name');
