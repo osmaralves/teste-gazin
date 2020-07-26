@@ -26,6 +26,7 @@ class DeveloperController extends Controller
 
     public function show(Developer $developer)
     {
+        return $developer;
     }
 
     public function update(DeveloperUpdateRequest $request, Developer $developer)
